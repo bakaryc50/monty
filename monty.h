@@ -22,6 +22,8 @@ typedef struct stack_s
 	struct stack_s *next;
 } stack_t;
 
+typedef void (*instruction_fn)(stack_t **, unsigned int line_number);
+
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -33,7 +35,7 @@ typedef struct stack_s
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_number);
+	instruction_fn f;
 } instruction_t;
 
 /**
@@ -68,7 +70,7 @@ typedef struct op_env_s
 
 extern op_env_t op_env;
 
-void *get_instruction_fn(const char *opcode);
+instruction_fn get_instruction_fn(const char *opcode);
 
 void op_push(stack_t **stack, unsigned int line_number);
 void op_pall(stack_t **stack, unsigned int line_number);
@@ -86,6 +88,8 @@ void op_pchar(stack_t **stack, unsigned int line_number);
 void op_pstr(stack_t **stack, unsigned int line_number);
 void op_rotr(stack_t **stack, unsigned int line_number);
 void op_rotl(stack_t **stack, unsigned int line_number);
+void op_stack(stack_t **stack, unsigned int line_number);
+void op_queue(stack_t **stack, unsigned int line_number);
 
 char **tokenize(char *str);
 size_t count_tokens(const char *str);

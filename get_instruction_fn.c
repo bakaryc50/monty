@@ -7,7 +7,7 @@
  * Return: If opcode is NULL, return NULL. If match is found, return the
  * corresponding function. If match is not found, exit with EXIT_FAILURE.
  */
-void *get_instruction_fn(const char *opcode)
+instruction_fn get_instruction_fn(const char *opcode)
 {
 	static instruction_t instructions[] = {
 		{"add",   op_add},

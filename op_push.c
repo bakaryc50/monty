@@ -3,6 +3,7 @@
 /**
  * op_push - push an element onto the stack
  * @stack: stack pointer
+ * @line_number: line number
  */
 void op_push(stack_t **stack, unsigned int line_number)
 {
