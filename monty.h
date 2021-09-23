@@ -17,9 +17,9 @@
  */
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -32,8 +32,8 @@ typedef struct stack_s
  */
 typedef struct instruction_s
 {
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /**
@@ -49,11 +49,10 @@ typedef enum stack_mode_n
 
 /**
  * struct op_env_s - operation environment
- * @sp: top of the stack
+ * @stack: top of the stack
  * @argv: argument vector
  * @line: line buffer
  * @linesz: line buffer size
- * @lineno: line number
  * @mode: stack operation mode
  */
 typedef struct op_env_s
