@@ -1,9 +1,11 @@
 #include "monty.h"
 
 /**
- * op_nop - do nothing
- * @stack: stack pointer
- * @line_number: line number
+ * nop_nop - does nothing
+ * @stack: pointer to stack
+ * @line_nu: count of number of commands
  */
-void op_nop(stack_t **stack __attribute__((unused)), unsigned int line_number __attribute__((unused)))
-{}
+void nop_nop(stack_t **stack __attribute__((unused)), unsigned int line_nu)
+{
+	(void) line_nu;
+}

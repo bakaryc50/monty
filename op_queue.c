@@ -3,9 +3,10 @@
 /**
  * op_queue - set stack mode to first-in first-out
  * @stack: stack pointer
- * @line_number: line number
+ * @line_nu: line number
  */
-void op_queue(stack_t **stack __attribute__((unused)), unsigned int line_number __attribute__((unused)))
+void op_queue(stack_t **stack __attribute__((unused)), unsigned int line_nu)
 {
-	op_env.mode = FIFO;
+	/*(void) op_env.mode = FIFO;*/
+	(void) line_nu;
 }

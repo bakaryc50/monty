@@ -1,21 +1,22 @@
 #include "monty.h"
 
 /**
- * op_pall - print each element on the stack
- * @stack: stack pointer
- * @line_number: line number
+ * op_pall - Calls Function
+ * @stack: pointer to stack
+ * @line_number: count of number of commands
+ * Description: Function that prints all elements of stack
  */
-void op_pall(stack_t **stack, unsigned int line_number __attribute__((unused)))
+void op_pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *p = NULL;
+	stack_t *tmp;
+	int count;
+	(void) line_number;
 
-	if (*stack)
+	tmp = *stack;
+	while (tmp)
 	{
-		(*stack)->next->prev = NULL;
-
-		for (p = *stack; p; p = p->prev)
-			printf("%d\n", p->n);
-
-		(*stack)->next->prev = *stack;
+		printf("%d\n", tmp->n);
+		tmp = tmp->next;
+		count++;
 	}
 }

@@ -1,23 +1,32 @@
 #include "monty.h"
 
 /**
- * op_pop - remove the element at the top of the stack
- * @stack: stack pointer
- * @line_number: line number
+ * op_pop - Calls Function
+ * @stack: Pointer to stack
+ * @line_number: count...
+ * Description: Function deletes an element of the stack
  */
 void op_pop(stack_t **stack, unsigned int line_number)
 {
-	stack_t *top = NULL;
+	stack_t *tmp = *stack;
+	(void) line_number;
 
-	if (!*stack)
-		pfailure("L%u: can't pop an empty stack\n", line_number);
-
-	if (*stack != (*stack)->prev)
+	if (!tmp)
 	{
-		top = (*stack)->prev;
-		(*stack)->next->prev = top;
-		top->next = (*stack)->next;
+		fprintf(stderr, "L%u: can't pop an empty stack\n",
+				data.l_num);
+		free(data.line), free_stack(data.head), fclose(data.fp);
+		exit(EXIT_FAILURE);
 	}
-	free(*stack);
-	*stack = top;
+	if (tmp->next == NULL)
+	{
+		free(tmp);
+		*stack = NULL;
+		return;
+	}
+	(*stack) = tmp->next;
+	(*stack)->next = tmp->next->next;
+	(*stack)->prev = NULL;
+	free(tmp);
 }
+

@@ -1,45 +1,32 @@
 #include "monty.h"
 
 /**
- * get_instruction_fn - get the function associated with an opcode
- * @opcode: the opcode to match
+ * get_instruction_fn - search for op matching function
+ * @opcode: string that may match an op function
  *
- * Return: If opcode is NULL, return NULL. If match is found, return the
- * corresponding function. If match is not found, exit with EXIT_FAILURE.
+ * Return: If found, pointer to function else NULL
  */
-instruction_fn get_instruction_fn(const char *opcode)
+void (*get_instruction_fn(char *opcode))(stack_t **stack, unsigned int line_nu)
 {
-	static instruction_t instructions[] = {
-		{"add",   op_add},
-		{"div",   op_div},
-		{"mod",   op_mod},
-		{"mul",   op_mul},
-		{"nop",   op_nop},
-		{"pall",  op_pall},
+	instruction_t instructions[] = {
+		{"push", op_push},
+		{"pall", op_pall},
+		{"pop", op_pop},
+		{"pint", op_pint},
+		{"add", op_add},
+		{"swap", op_swap},
+		{"nop", op_nop},
+		{"sub", op_sub},
+		{"mul", op_mul},
+		{"div", op_div},
+		{"mod", op_mod},
 		{"pchar", op_pchar},
-		{"pint",  op_pint},
-		{"pop",   op_pop},
-		{"pstr",  op_pstr},
-		{"push",  op_push},
-		{"queue", op_queue},
-		{"rotl",  op_rotl},
-		{"rotr",  op_rotr},
-		{"stack", op_stack},
-		{"sub",   op_sub},
-		{"swap",  op_swap},
-		{0}
+		{NULL, NULL}
 	};
-	instruction_t *op = instructions;
+	int i;
 
-	if (opcode)
-	{
-		while (op->opcode)
-		{
-			if (!strcmp(opcode, op->opcode))
-				return (op->f);
-			++op;
-		}
-		pfailure("L%u: unknown instruction %s\n", op_env.lineno, opcode);
-	}
+	for (i = 0; instructions[i].opcode != NULL ; i++)
+		if (strcmp(instructions[i].opcode, opcode) == 0)
+			return (*(instructions[i]).f);
 	return (NULL);
 }

@@ -1,20 +1,23 @@
 #include "monty.h"
 
 /**
- * op_sub - sub the top two elements on the stack
- * @stack: stack pointer
- * @line_number: line number
+ * op_sub - replace first two nodes with substraction of the two
+ * @stack: pointer to stack
+ * @line_number: count of number of commands
  */
 void op_sub(stack_t **stack, unsigned int line_number)
 {
-	int to_sub = 0;
+	int n_sub = 0;
 
-	if (!(*stack && *stack != (*stack)->next))
-		pfailure("L%u: can't sub, stack too short\n", line_number);
-
-	to_sub = (*stack)->n;
-
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%u: can't sub, stack too short\n",
+			line_number);
+		free(data.line), free_stack(data.head), fclose(data.fp);
+		exit(EXIT_FAILURE);
+	}
+	n_sub = (*stack)->n;
 	op_pop(stack, line_number);
-
-	(*stack)->n -= to_sub;
+	(*stack)->n -= n_sub;
 }
+

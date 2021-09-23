@@ -1,20 +1,22 @@
 #include "monty.h"
 
 /**
- * op_add - add the top two elements on the stack
- * @stack: stack pointer
- * @line_number: line number
+ * op_add - add together the first two nodes
+ * @stack: pointer to stack
+ * @line_number: count of number of commands
  */
 void op_add(stack_t **stack, unsigned int line_number)
 {
-	int to_add = 0;
+	int n_sum = 0;
 
-	if (!(*stack && *stack != (*stack)->next))
-		pfailure("L%u: can't add, stack too short\n", line_number);
-
-	to_add = (*stack)->n;
-
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%u: can't add, stack too short\n",
+			line_number);
+		free(data.line), free_stack(data.head), fclose(data.fp);
+		exit(EXIT_FAILURE);
+	}
+	n_sum = (*stack)->n;
 	op_pop(stack, line_number);
-
-	(*stack)->n += to_add;
+	(*stack)->n += n_sum;
 }
