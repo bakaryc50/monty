@@ -52,6 +52,7 @@ typedef enum stack_mode_n
  * @stack: top of the stack
  * @argv: argument vector
  * @line: line buffer
+ * @lineno: line number
  * @linesz: line buffer size
  * @mode: stack operation mode
  */
@@ -60,13 +61,14 @@ typedef struct op_env_s
 	stack_t *stack;
 	char **argv;
 	char *line;
+	size_t lineno;
 	size_t linesz;
 	stack_mode_t mode;
 } op_env_t;
 
 extern op_env_t op_env;
 
-void (*get_instruction_fn)(const char *opcode, unsigned int line_number);
+void *get_instruction_fn(const char *opcode);
 
 void op_push(stack_t **stack, unsigned int line_number);
 void op_pall(stack_t **stack, unsigned int line_number);

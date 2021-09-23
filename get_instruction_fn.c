@@ -7,7 +7,7 @@
  * Return: If opcode is NULL, return NULL. If match is found, return the
  * corresponding function. If match is not found, exit with EXIT_FAILURE.
  */
-void (*get_instruction_fn)(const char *opcode, unsigned int line_number)
+void *get_instruction_fn(const char *opcode)
 {
 	static instruction_t instructions[] = {
 		{"add",   op_add},
@@ -39,7 +39,7 @@ void (*get_instruction_fn)(const char *opcode, unsigned int line_number)
 				return (op->f);
 			++op;
 		}
-		pfailure("L%u: unknown instruction %s\n", line_number, opcode);
+		pfailure("L%u: unknown instruction %s\n", op_env.lineno, opcode);
 	}
 	return (NULL);
 }
