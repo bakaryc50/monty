@@ -1,51 +1,83 @@
 #include "monty.h"
+stack_t *head = NULL;
 
 /**
- * main - interpret lines of a bytecode file
- * @ac: number of command line input arguments
- * @av: list of arguments
- *
- * Return: EXIT_SUCCESS on success else EXIT_FAILURE
+ * main - entry point
+ * @argc: arguments count
+ * @argv: list of arguments
+ * Return: always 0
  */
-int main(int ac, char **av)
-{
-	size_t len = 0;
-	size_t read = 0;
-	void (*f)(stack_t **stack, unsigned int line_number);
-	char *args[2];
 
-	if (ac != 2)
+int main(int argc, char *argv[])
+{
+	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	data.head = NULL;
-	data.line = NULL;
-	data.fp = fopen(av[1], "r");
-	if (data.fp == NULL)
+	open_file(argv[1]);
+	free_nodes();
+	return (0);
+}
+
+/**
+ * create_node - Creates a node.
+ * @n: Number to go inside the node.
+ * Return: Upon sucess a pointer to the node. Otherwise NULL.
+ */
+stack_t *create_node(int n)
+{
+	stack_t *node;
+
+	node = malloc(sizeof(stack_t));
+	if (node == NULL)
+		err(4);
+	node->next = NULL;
+	node->prev = NULL;
+	node->n = n;
+	return (node);
+}
+
+/**
+ * free_nodes - Frees nodes in the stack.
+ */
+void free_nodes(void)
+{
+	stack_t *tmp;
+
+	if (head == NULL)
+		return;
+
+	while (head != NULL)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", av[1]);
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+}
+
+
+/**
+ * add_to_queue - Adds a node to the queue.
+ * @new_node: Pointer to the new node.
+ * @ln: line number of the opcode.
+ */
+void add_to_queue(stack_t **new_node, __attribute__((unused))unsigned int ln)
+{
+	stack_t *tmp;
+
+	if (new_node == NULL || *new_node == NULL)
 		exit(EXIT_FAILURE);
-	}
-	for (data.l_num = 1; (read = getline(&data.line, &len, data.fp)) != -1;
-	     data.l_num++)
+	if (head == NULL)
 	{
-		if (only_delims(data.line))
-			continue;
-		if (splitstr(data.line, args) == 1)
-			continue;
-		data.n = args[1];
-		f = get_op(args[0]);
-		if (f == NULL)
-		{
-			fprintf(stderr, "L%u: unknown instruction %s\n",
-				data.l_num, args[0]);
-			free(data.line), free_stack(data.head), fclose(data.fp);
-			exit(EXIT_FAILURE);
-		}
-		(*f)(&data.head, data.l_num);
-		reset_args(args);
+		head = *new_node;
+		return;
 	}
-	free(data.line), free_stack(data.head), fclose(data.fp);
-	return (EXIT_SUCCESS);
+	tmp = head;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+
+	tmp->next = *new_node;
+	(*new_node)->prev = tmp;
+
 }
