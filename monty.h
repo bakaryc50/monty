@@ -1,7 +1,6 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-<<<<<<< HEAD
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <unistd.h>
@@ -9,7 +8,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdarg.h>
-=======
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -26,7 +24,6 @@
 			NULL, NULL    \
 		}                   \
 	}
->>>>>>> 7f3ee3b7213955f02f96a20f107c8e3c8e4628c2
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -58,7 +55,6 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-<<<<<<< HEAD
 extern stack_t *head;
 typedef void (*op_func)(stack_t **, unsigned int);
 
@@ -100,7 +96,7 @@ void err(int error_code, ...);
 void more_err(int error_code, ...);
 void string_err(int error_code, ...);
 void rotr(stack_t **, unsigned int);
-=======
+
 /**
 * struct help - argument for the current opcode
 * @data_struct: stack mode, stack (default) and queue
@@ -113,7 +109,7 @@ typedef struct help
 	int data_struct;
 	char *argument;
 } help;
-help global;
+extern help global;
 
 /* stack utility functions available in linked_list.c */
 stack_t *add_node(stack_t **stack, const int n);
@@ -140,6 +136,5 @@ void opcode(stack_t **stack, char *str, unsigned int line_cnt);
 
 int is_digit(char *string);
 int isnumber(char *str);
->>>>>>> 7f3ee3b7213955f02f96a20f107c8e3c8e4628c2
 
 #endif /* MONTY_H */
